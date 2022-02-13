@@ -1,0 +1,50 @@
+service: app
+plugins:
+  - serverless-dotenv-plugin
+
+provider:
+  name: aws
+  stage: ${opt:stage, 'dev'}
+  region: ${env:REGION}
+  endpointType: regional
+  ecr:
+    images:
+      lambda_app:
+        path: .
+        file: ./compose/lambda/Dockerfile
+  stackTags:
+    Environment: ${opt:stage, 'dev'}
+
+functions:
+  app:
+    image:
+      name: lambda_app
+    events:
+      - http:
+          method: any
+          path: /{proxy+}
+          cors: true
+          authorizer: aws_iam
+
+package:
+  exclude:
+    - node_modules/**
+    - __pycache__/**
+    - .venv/**
+    - config.yml
+    - sample-config.yml
+    - tests
+    - migrations
+    - terraform
+    - pyproject.toml
+    - poetry.lock
+    - generator-config.yml
+    - generate_angular_client.sh
+    - cli.py
+    - alembic.ini
+    - .pre-commit-config.yaml
+    - .gitignore
+    - .coverage
+    - .mypy_cache/**
+    - .pytest_cache/**
+    - mypy.ini          
