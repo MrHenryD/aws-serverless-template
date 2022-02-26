@@ -1,8 +1,11 @@
+# Standard library imports
 import logging
 import sys
 
+# Third party imports
 from pythonjsonlogger import jsonlogger  # type: ignore
 
+# Local application imports
 from settings import LoggerConfig  # type: ignore
 
 

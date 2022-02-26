@@ -19,6 +19,9 @@ mangum = "^0.12.4"
 python-json-logger = "^2.0.2"
 requests = "^2.27.1"
 types-requests = "^2.27.9"
+coverage = "^6.3.2"
+safety = "^1.10.3"
+mock = "^4.0.3"
 
 [tool.poetry.dev-dependencies]
 
@@ -27,3 +30,32 @@ types-requests = "^2.27.9"
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
+[tool.isort]
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+line_length = 88
+skip = []
+import_heading_stdlib = 'Standard library imports'
+import_heading_thirdparty = 'Third party imports'
+import_heading_firstparty = 'Local application imports'
+import_heading_localfolder = 'Local folder imports'
+known_first_party = ['src']
+
+[tool.coverage.run]
+branch = true
+command_line = '-m pytest -s -rP -v'
+source = ['src/']
+omit = [
+    "tests/*",
+    "src/logger.py",
+    "src/settings.py",
+    "*__init__.py",
+    "*env/*",
+]
+
+[tool.coverage.report]
+precision = 2
+skip_covered = true
+fail_under = 0
